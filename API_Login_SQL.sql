@@ -28,9 +28,9 @@ AS
     DECLARE @ExpiryDate DATE;
     DECLARE @MsgID INT;
     DECLARE @Msg VARCHAR(100);
+    DECLARE @pass VARCHAR(100);
 
-	SELECT @UserID = userid, @arg_LoginName = loginname, 
-    @username = username, @arg_Password = pass, @ExpiryDate = expirydate
+    SELECT @UserID = userid, @username = username, @Pass = pass, @ExpiryDate = expirydate
 
     From Users
 
@@ -43,7 +43,7 @@ AS
         RETURN;
     END
     
-    IF @arg_Password <> @arg_Password
+    IF @arg_Password <> @Pass
     BEGIN
         SELECT -2 AS msgid, 'invalid pass' AS msg, null as userid, null as username; 
         RETURN
