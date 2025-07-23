@@ -2,10 +2,14 @@
 $errorMessage = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $loginName = $_POST["loginname"];
+    $username = $_POST["username"];
     $password = $_POST["password"];
+   $email = $_POST["email"] ;
 
-    $apiUrl = "http://www.minafaleh.com/backend/API_Login.php?loginName=" . urlencode($loginName) . "&pass=" . urlencode($password);
+    $apiUrl = "http://www.minafaleh.com/backend/API_SignUp.php?
+     username=" . urlencode($username)
+    . "&pass=" . urlencode($password) 
+    . "&email=" . urlencode($email);
 
     $response = file_get_contents($apiUrl);
     $result = json_decode($response, true);
@@ -68,9 +72,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php if (!empty($errorMessage)) : ?>
                             <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
                         <?php endif; ?>
+                         <div class="form-group">
+                            <label>User Name</label>
+                            <input type="text" class="form-control" placeholder="User Name" 
+                            value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
+                        </div>
                         <div class="form-group">
-                            <label>Login Name</label>
-                            <input type="text" name="loginname" class="form-control" placeholder="Login Name" value="<?php echo isset($_POST['loginname']) ? htmlspecialchars($_POST['loginname']) : ''; ?>"required>
+                            <label>Email address</label>
+                            <input type="email" class="form-control" placeholder="Email"
+                            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
                         </div>
 
                        <div class="form-group">
@@ -81,8 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     value="<?php echo isset($_POST['password']) ? htmlspecialchars($_POST['password']) : ''; ?>" required>
 
                                 <div class="input-group-append" style="height: 38px;">
-                                    <button class="btn btn-outline-secondary no-hover d-flex align-items-center" type="button" onclick="togglePassword()" style="height: 100%; border: 1px solid #ced4da;
-">
+                                    <button class="btn btn-outline-secondary no-hover d-flex align-items-center" type="button" onclick="togglePassword()"  
+                                    style="height: 100%; border: 1px solid #ced4da;">
                                         <i class="fa fa-eye" id="toggleIcon"></i>
                                     </button>
                                 </div>
@@ -91,16 +101,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Remember Me
-                            </label>
-                              <label class="pull-right">
-                                <a href="forget.php">Forgotten Password?</a>
-                            </label>
+                                <input type="checkbox" name="agree" required  
+                                     oninvalid="this.setCustomValidity('You must agree to continue')" 
+                                     oninput="setCustomValidity('')">  Agree the terms and policy
 
+                            </label>
+                             
                         </div>
-                        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Register</button>
+
+                        
                         <div class="register-link m-t-15 text-center">
-                            <p>Don't have an account? <a href="signup.php">Sign Up Here</a></p>
+                            <p>Already have account ? <a href="login.php"> Sign in</a></p>
                         </div>
                     </form>
                 </div>
